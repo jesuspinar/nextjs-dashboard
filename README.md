@@ -6,3 +6,7 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 
 ## Run dev database on Docker
 $ docker run --name acme-postgres -e POSTGRES_PASSWORD=admin -d postgres
+
+
+## start postgre service
+$ sudo service postgresql start
