@@ -3,7 +3,7 @@ import connectionPool from '../../db';
 import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 import { User, Customer, Invoice, Revenue } from '../lib/definitions';
 
-async function executeQuery(query: string, params: any[] = []): Promise<void> {
+async function executeQuery(query: string, params: unknown[] = []): Promise<void> {
   try {
     await connectionPool.query(query, params);
   } catch (error) {
