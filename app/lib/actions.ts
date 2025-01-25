@@ -14,6 +14,7 @@ const FormSchema = z.object({
 });
 
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function createInvoice(formData: FormData) {
   try {
@@ -39,4 +40,45 @@ export async function createInvoice(formData: FormData) {
   }
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices')
+}
+
+export async function updateInvoice(id: string, formData: FormData) {
+  try {
+    const { customerId, amount, status } = UpdateInvoice.parse({
+      customerId: formData.get('customerId'),
+      amount: formData.get('amount'),
+      status: formData.get('status'),
+    });
+
+    const amountInCents = amount * 100;
+
+    const query = {
+      text: `UPDATE invoices SET customer_id = $1, amount = $2, status = $3 WHERE id = $4`,
+      values: [customerId, amountInCents, status, id],
+    };
+
+    await connectionPool.query(query);
+
+  } catch (error: any) {
+    console.error('Error updating invoice:', error.message, error.stack);
+    throw new Error('An error occurred while updating the invoice.');
+  }
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
+}
+
+export async function deleteInvoice(id: string) {
+  try {
+    const query = {
+      text: `DELETE FROM invoices WHERE id = $1`,
+      values: [id],
+    };
+
+    await connectionPool.query(query);
+
+  } catch (error: any) {
+    console.error('Error deleting invoice:', error.message, error.stack);
+    throw new Error('An error occurred while deleting the invoice.');
+  }
+  revalidatePath('/dashboard/invoices');
 }
