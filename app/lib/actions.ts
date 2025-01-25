@@ -32,23 +32,24 @@ const CreateInvoice = FormSchema.omit({ id: true, date: true });
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 export async function createInvoice(prevState: State, formData: FormData) {
+
+  const validatedFields = CreateInvoice.safeParse({
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing or Invalid Fields. Failed to Create Invoice.'
+    };
+  }
+  const { customerId, amount, status } = validatedFields.data;
+  const amountInCents = amount * 100;
+  const date = new Date().toISOString().split('T')[0];
+  
   try {
-    const validatedFields = CreateInvoice.safeParse({
-      customerId: formData.get('customerId'),
-      amount: formData.get('amount'),
-      status: formData.get('status'),
-    });
-
-    if (!validatedFields.success) {
-      return {
-        errors: validatedFields.error.flatten().fieldErrors,
-        message: 'Missing or Invalid Fields. Failed to Create Invoice.'
-      };
-    }
-    const { customerId, amount, status } = validatedFields.data;
-    const amountInCents = amount * 100;
-    const date = new Date().toISOString().split('T')[0];
-
     const query = {
       text: `INSERT INTO invoices (customer_id, amount, status, date)
              VALUES ($1, $2, $3, $4)`,
@@ -66,16 +67,23 @@ export async function createInvoice(prevState: State, formData: FormData) {
   redirect('/dashboard/invoices')
 }
 
-export async function updateInvoice(id: string, formData: FormData) {
+export async function updateInvoice(id: string, prevState: State, formData: FormData) {
+  const validatedFields = UpdateInvoice.safeParse({
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Invoice.',
+    };
+  }
+  const { customerId, amount, status } = validatedFields.data;
+  const amountInCents = amount * 100;
+
   try {
-    const { customerId, amount, status } = UpdateInvoice.parse({
-      customerId: formData.get('customerId'),
-      amount: formData.get('amount'),
-      status: formData.get('status'),
-    });
-
-    const amountInCents = amount * 100;
-
     const query = {
       text: `UPDATE invoices SET customer_id = $1, amount = $2, status = $3 WHERE id = $4`,
       values: [customerId, amountInCents, status, id],
