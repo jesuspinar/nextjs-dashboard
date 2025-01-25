@@ -6,6 +6,12 @@ import styles from '@/app/ui/home.module.css';
 import { lusitana } from '@/app/ui/fonts';
 
 import Image from 'next/image';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Invoices',
+  icons: '/favicon.ico'
+};
 
 export default function Page() {
   return (
