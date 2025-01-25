@@ -1,5 +1,7 @@
 # Next.js Dashboard Application
 
+![Dashboard preview.](./public/opengraph-image.png)
+
 ## Project Overview
 This is a comprehensive Next.js dashboard application demonstrating modern web development practices, including:
 - Server-side rendering with Next.js 15
