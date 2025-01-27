@@ -86,11 +86,11 @@ yarn install
 
 ### 5. Database Migrations and Seeding
 ```bash
-# Run database migrations
-npm run db:migrate
+# TODO: Implement prisma
+# Run database migrations and seed
+npm run dev
 
-# Optional: Seed initial data
-npm run db:seed
+curl -X GET http://localhost:3000/seed
 ```
 
 ### 6. Generate Authentication Secret
