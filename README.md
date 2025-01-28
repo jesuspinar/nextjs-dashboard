@@ -86,11 +86,11 @@ yarn install
 
 ### 5. Database Migrations and Seeding
 ```bash
-# TODO: Implement prisma
-# Run database migrations and seed
-npm run dev
+# Deploy Prisma schema to the database
+npm run schema_to_db
 
-curl -X GET http://localhost:3000/seed
+# Run database seed
+npm run seed
 ```
 
 ### 6. Generate Authentication Secret
@@ -98,7 +98,7 @@ curl -X GET http://localhost:3000/seed
 # Generate a secure random token for NextAuth
 openssl rand -base64 32
 ```
-Copy this generated token into your `.env` file for `NEXTAUTH_SECRET`.
+Copy this generated token into your `.env` file for `AUTH_SECRET`.
 
 ### 7. Development Server
 ```bash
@@ -108,24 +108,7 @@ npm run dev
 # Open http://localhost:3000 in your browser
 ```
 
-## Available Scripts
-- `npm run dev`: Start development server
-- `npm run build`: Create production build
-- `npm run start`: Start production server
-- `npm run lint`: Run ESLint for code quality checks
-
-## Recommended Extensions
-- VS Code PostgreSQL Extension
-- ESLint
-- Tailwind CSS IntelliSense
-
-## Deployment Considerations
-- Ensure all environment variables are set in your production environment
-- Use a managed PostgreSQL service like Vercel Postgres, AWS RDS, or Supabase
-- Set up proper database migrations for production
-
 ## Troubleshooting
 - Ensure all dependencies are installed correctly
 - Check PostgreSQL connection parameters
 - Verify environment variables are properly set
-- For NextAuth issues, regenerate the `NEXTAUTH_SECRET`
