@@ -8,6 +8,7 @@ This is a comprehensive Next.js dashboard application demonstrating modern web d
 - Authentication with NextAuth
 - Tailwind CSS for styling
 - PostgreSQL database integration
+- Prisma for database migrations
 - TypeScript for type safety
 
 For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
@@ -69,9 +70,24 @@ If you prefer a local PostgreSQL installation:
 ```bash
 # Start PostgreSQL service
 sudo service postgresql start
+```
 
-# Create database (adjust names as needed)
-createdb your_database_name
+### 3.1 Create database (adjust names as needed)
+```bash
+# Connect to postgres
+psql postgresql://your_user:your_password@localhost:5432
+
+# Create new database
+$ CREATE DATABASE your_database_name;
+
+# Focus the new database
+$ \c your_database_name
+
+# Adds uuid-ossp extension to new database
+$ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+# Close the connection
+$ exit
 ```
 
 ### 4. Install Dependencies
