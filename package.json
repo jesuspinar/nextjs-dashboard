@@ -4,7 +4,10 @@
     "build": "next build",
     "dev": "next dev --turbopack",
     "start": "next start",
-    "migrate": "prisma migrate deploy",
+    "new_migration": "prisma migrate dev --name",
+    "apply_migration": "prisma migrate deploy",
+    "schema_to_db": "prisma db push",
+    "schema_from_db": "prisma db pull",
     "seed": "ts-node --compilerOptions '{\"module\":\"CommonJS\"}' prisma/seed.ts",
     "lint": "next lint"
   },
