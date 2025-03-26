@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
 import { invoices, customers, revenue, users } from '../app/lib/placeholder-data';
 import { Customer, Invoice, Revenue, User } from '@/app/lib/definitions';
@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 async function seedUsers(): Promise<void> {
   for (const user of users as User[]) {
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    const hashedPassword = await bcryptjs.hash(user.password, 10);
     await prisma.users.upsert({
       where: { id: user.id },
       update: {},
